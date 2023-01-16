@@ -1,6 +1,7 @@
 #include <LiquidCrystal_I2C.h>
 
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x3F for a 16 chars and 2 line display
+
 #include <SPI.h>
 #include <MFRC522.h>
 
@@ -13,16 +14,16 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);  // Create MFRC522 instance
 #define NEW_UID {0xDE, 0xAD, 0xBE, 0xEF}
 
 void setup() {
-	Serial.begin(9600);		// Initialize serial communications with the PC
-	while (!Serial);		// Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
-	SPI.begin();			// Init SPI bus
-	mfrc522.PCD_Init();		// Init MFRC522
-	delay(4);				// Optional delay. Some board do need more time after init to be ready, see Readme
-	mfrc522.PCD_DumpVersionToSerial();	// Show details of PCD - MFRC522 Card Reader details
-	Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
-  lcd.init();
-  lcd.clear();         
-  lcd.backlight();      // Make sure backlight is on
+Serial.begin(9600);		// Initialize serial communications with the PC
+while (!Serial);		// Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
+SPI.begin();			// Init SPI bus
+mfrc522.PCD_Init();		// Init MFRC522
+delay(4);				// Optional delay. Some board do need more time after init to be ready, see Readme
+mfrc522.PCD_DumpVersionToSerial();	// Show details of PCD - MFRC522 Card Reader details
+Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
+lcd.init();
+lcd.clear();         
+lcd.backlight();      // Make sure backlight is on
 
   
   // Print a message on both lines of the LCD.
@@ -45,11 +46,6 @@ void loop() {
 		return;
 	}
 
-	// Dump debug info about the card; PICC_HaltA() is automatically called
-
-//	mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
-
-
 
      MFRC522::Uid uid = mfrc522.uid;
 
@@ -61,6 +57,5 @@ void loop() {
         lcd.print(uid.uidByte[i], HEX);
     }
     mfrc522.PICC_HaltA();
-
 
 }
