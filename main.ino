@@ -36,7 +36,7 @@ LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x3F for a 16 chars
 #define SS_PIN    10    // Configurable, see typical pin layout above
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance
-String my_name;
+String input;
 /* Set your new UID here! */
 #define NEW_UID {0xDE, 0xAD, 0xBE, 0xEF}
 
